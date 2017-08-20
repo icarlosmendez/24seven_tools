@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Concerns\BuildsQueries;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 
@@ -97,7 +98,7 @@ class Builder
     }
 
     /**
-     * Create and return an un-saved model instance.
+     * Create and return and un-saved model instance.
      *
      * @param  array  $attributes
      * @return \Illuminate\Database\Eloquent\Model
@@ -217,7 +218,7 @@ class Builder
     /**
      * Add an "or where" clause to the query.
      *
-     * @param  string|array|\Closure  $column
+     * @param  string|\Closure  $column
      * @param  string  $operator
      * @param  mixed  $value
      * @return \Illuminate\Database\Eloquent\Builder|static
@@ -690,7 +691,7 @@ class Builder
                                     ? $this->forPage($page, $perPage)->get($columns)
                                     : $this->model->newCollection();
 
-        return $this->paginator($results, $total, $perPage, $page, [
+        return new LengthAwarePaginator($results, $total, $perPage, $page, [
             'path' => Paginator::resolveCurrentPath(),
             'pageName' => $pageName,
         ]);
@@ -716,7 +717,7 @@ class Builder
         // paginator instances for these results with the given page and per page.
         $this->skip(($page - 1) * $perPage)->take($perPage + 1);
 
-        return $this->simplePaginator($this->get($columns), $perPage, $page, [
+        return new Paginator($this->get($columns), $perPage, $page, [
             'path' => Paginator::resolveCurrentPath(),
             'pageName' => $pageName,
         ]);
@@ -726,7 +727,7 @@ class Builder
      * Save a new model and return the instance.
      *
      * @param  array  $attributes
-     * @return \Illuminate\Database\Eloquent\Model|$this
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function create(array $attributes = [])
     {
@@ -739,7 +740,7 @@ class Builder
      * Save a new model and return the instance. Allow mass-assignment.
      *
      * @param  array  $attributes
-     * @return \Illuminate\Database\Eloquent\Model|$this
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function forceCreate(array $attributes)
     {
@@ -887,11 +888,7 @@ class Builder
 
         $builder = clone $this;
 
-        foreach ($this->scopes as $identifier => $scope) {
-            if (! isset($builder->scopes[$identifier])) {
-                continue;
-            }
-
+        foreach ($this->scopes as $scope) {
             $builder->callScope(function (Builder $builder) use ($scope) {
                 // If the scope is a Closure we will just go ahead and call the scope with the
                 // builder instance. The "callScope" method will properly group the clauses
@@ -928,12 +925,11 @@ class Builder
         // We will keep track of how many wheres are on the query before running the
         // scope so that we can properly group the added scope constraints in the
         // query as their own isolated nested where statement and avoid issues.
-        $originalWhereCount = is_null($query->wheres)
-                    ? 0 : count($query->wheres);
+        $originalWhereCount = count($query->wheres);
 
         $result = $scope(...array_values($parameters)) ?: $this;
 
-        if (count((array) $query->wheres) > $originalWhereCount) {
+        if (count($query->wheres) > $originalWhereCount) {
             $this->addNewWheresWithinGroup($query, $originalWhereCount);
         }
 
