@@ -4,12 +4,6 @@
     <p>{!! $task->added_by !!}</p>
 </div>
 
-<!-- User Id Field -->
-<!-- <div class="form-group">
-    {!! Form::label('user_id', 'User Id:') !!}
-    <p>{!! $task->user_id !!}</p>
-</div> -->
-
 <!-- Name Field -->
 <div class="form-group">
     {!! Form::label('name', 'Task Name:') !!}
@@ -34,15 +28,30 @@
     <p>{!! $task->created_at !!}</p>
 </div>
 
-<!-- Deleted At Field -->
-<div class="form-group">
-    {!! Form::label('deleted_at', 'Deleted At:') !!}
-    <p>{!! $task->deleted_at !!}</p>
-</div>
-
 <!-- Updated At Field -->
 <div class="form-group">
-    {!! Form::label('updated_at', 'Updated At:') !!}
+    {!! Form::label('updated_at', 'Last Updated At:') !!}
     <p>{!! $task->updated_at !!}</p>
 </div>
 
+<!-- Deleted At Field -->
+<div class="form-group">
+    {!! Form::label('deleted_at', 'Marked as Completed At:') !!}
+    <p>{!! $task->deleted_at !!}</p>
+</div>
+
+<div class="btn-group pull-right">
+    <a href="{!! route('tasks.edit', [$task->id]) !!}" class='btn btn-default btn-xs'>
+        <i class="glyphicon glyphicon-edit"></i>
+    </a>
+    
+    {!! Form::button(
+        '<i class="glyphicon glyphicon-trash"></i>', 
+            [
+                'type'      => 'submit', 
+                'class'     => 'btn btn-danger btn-xs', 
+                'onclick'   => 'return confirm("Are you sure?")'
+            ]
+        ) 
+    !!}
+</div>
