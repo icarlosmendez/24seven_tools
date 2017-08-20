@@ -13,13 +13,13 @@
 <!-- Cell Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('cell', 'Cell:') !!}
-    {!! Form::number('cell', null, ['class' => 'form-control']) !!}
+    {!! Form::text('cell', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Land Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('land', 'Land:') !!}
-    {!! Form::number('land', null, ['class' => 'form-control']) !!}
+    {!! Form::text('land', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Email Field -->

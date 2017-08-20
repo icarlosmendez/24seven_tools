@@ -40,18 +40,21 @@
     <p>{!! $task->deleted_at !!}</p>
 </div>
 
-<div class="btn-group pull-right">
-    <a href="{!! route('tasks.edit', [$task->id]) !!}" class='btn btn-default btn-xs'>
-        <i class="glyphicon glyphicon-edit"></i>
-    </a>
-    
-    {!! Form::button(
-        '<i class="glyphicon glyphicon-trash"></i>', 
-            [
-                'type'      => 'submit', 
-                'class'     => 'btn btn-danger btn-xs', 
-                'onclick'   => 'return confirm("Are you sure?")'
-            ]
-        ) 
-    !!}
-</div>
+{!! Form::open(['route' => ['tasks.destroy', $task->id], 'method' => 'delete']) !!}
+    <div class="btn-group pull-right" style="padding-right: 20px">
+        <a href="{!! route('tasks.index') !!}" class="btn btn-default">Back</a>
+        <a href="{!! route('tasks.edit', [$task->id]) !!}" class='btn btn-default btn-s'>
+            <i class="glyphicon glyphicon-edit"></i>
+        </a>
+        
+        {!! Form::button(
+            '<i class="glyphicon glyphicon-trash"></i>', 
+                [
+                    'type'      => 'submit', 
+                    'class'     => 'btn btn-danger btn-s', 
+                    'onclick'   => 'return confirm("Are you sure?")'
+                ]
+            ) 
+        !!}
+    </div>
+{!! Form::close() !!}

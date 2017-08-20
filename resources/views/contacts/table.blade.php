@@ -1,7 +1,7 @@
 <table class="table table-responsive" id="contacts-table">
     <thead>
-        <th>Name First</th>
         <th>Name Last</th>
+        <th>Name First</th>
         <th>Cell</th>
         <th>Land</th>
         <th>Email</th>
@@ -13,8 +13,8 @@
     <tbody>
     @foreach($contacts as $contact)
         <tr>
-            <td>{!! $contact->name_first !!}</td>
             <td>{!! $contact->name_last !!}</td>
+            <td>{!! $contact->name_first !!}</td>
             <td>{!! $contact->cell !!}</td>
             <td>{!! $contact->land !!}</td>
             <td>{!! $contact->email !!}</td>
@@ -24,9 +24,9 @@
             <td>
                 {!! Form::open(['route' => ['contacts.destroy', $contact->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>
-                    <a href="{!! route('contacts.show', [$contact->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-eye-open"></i></a>
-                    <a href="{!! route('contacts.edit', [$contact->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-edit"></i></a>
-                    {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}
+                    <a href="{!! route('contacts.show', [$contact->id]) !!}" class='btn btn-default btn-xs'>
+                        <i class="glyphicon glyphicon-eye-open"></i>
+                    </a>
                 </div>
                 {!! Form::close() !!}
             </td>
