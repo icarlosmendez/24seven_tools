@@ -1,4 +1,8 @@
-<table class="table table-responsive" id="contacts-table">
+<div class="row" style="padding-left: 20px">
+    <input type="search" class="light-table-filter" data-table="order-table" placeholder="Filter List" autofocus="autofocus">
+</div>
+
+<table class="table table-responsive order-table" id="contacts-table">
     <thead>
         <th>Name Last</th>
         <th>Name First</th>

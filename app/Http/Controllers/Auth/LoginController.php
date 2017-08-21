@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -36,4 +37,27 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    /**
+     * Handle an authentication attempt.
+     *
+     * @return Response
+     */
+    // public function authenticate()
+    // {
+    //     if (Auth::attempt(['email' => $email, 'password' => $password])) 
+    //     {
+    //         // Authentication passed...
+    //         Flash::success('Login successful.');
+            
+    //         return redirect()->intended('/home');
+        
+    //     } else {
+    //         // Authentication failed...
+    //         Flash::error('Login failed.');
+
+    //         return redirect()->intended('/login');
+    //     }
+    // }
+
 }

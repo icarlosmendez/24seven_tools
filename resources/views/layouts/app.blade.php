@@ -10,6 +10,14 @@
             <!-- Main Header -->
             <header class="main-header">
                 @include('layouts.header')
+                <!-- Potential location for defining authentication logic for presenting different headers -->
+                <!-- @if (Auth::user())
+                    
+
+                @else
+                    <?php Route::get('/home', 'HomeController@index'); ?>
+
+                @endif -->
             </header>
 
             <!-- Left side column. contains the logo and sidebar -->
