@@ -7,6 +7,8 @@ console.log("Animations.js is loading!");
 // 	// Animation complete.
 // });
 
+
+
 setTimeout(function() {
-	$('.alert').fadeOut('slow');
-}, 3000); // <-- time in milliseconds
+	$('.alert').slideUp('slow');
+}, 5000); // <-- time in milliseconds
